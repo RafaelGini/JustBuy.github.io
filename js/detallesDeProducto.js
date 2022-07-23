@@ -1,0 +1,88 @@
+//Funciones de verificacion y manejo del array carrito
+const inCarrito = (productoVerificar) => { 
+    //retorna la posicion del objeto en el array carrito, retorna -1 si no está
+    const carrito = getFromDataBase('carrito');
+    for (let inx in carrito){
+        if (carrito[inx].id == productoVerificar.id) return inx;
+    }
+    return -1;
+}
+
+const AddToCart = () => {
+    const carrito = getFromDataBase('carrito');
+    const productoAgregar = getFromDataBase('ProductoADetallar');
+    const inx = inCarrito(productoAgregar);
+    if (inx != -1){
+        carrito[inx].cantidad = productoAgregar.cantidad;
+    } else {
+        carrito.push(productoAgregar);
+    }
+    setToDataBase('carrito', carrito);
+}
+
+//Funciones similares a los demas JS pero con cambios muy especificos que son requeridos por el archivo detallesDeProducto.html
+const subirDetalles = () => {
+    const producto = getFromDataBase('ProductoADetallar');
+    if (producto == null) return;
+    const section = document.getElementById("Detalles");
+    section.innerHTML = `<div class="col-2 df-row-center"> 
+                            <img src="../images/${producto.imagen}"> 
+                         </div>
+                         <div class="col-2">
+                            <p>${producto.title}</p>
+                            <h1>${producto.nombre}</h1>
+                            <h4>Ars$ ${(producto.precio * producto.cantidad).toLocaleString('en-US')}</h4>
+                            <input type="number" value="${producto.cantidad}">
+                            <a href="carrito.html" class="btn addToCart">Añadir al Carrito</a>
+                            <h3>Detalles del Producto <i class="fa-solid fa-circle-info"></i> </h3>
+                            <br>
+                            <p>${producto.descripcion} </p>
+                         </div>`;
+
+    //Eventos para los productos detallados
+    const inputNumber = document.querySelector('#Detalles div input');
+    inputNumber.addEventListener('change', () => {
+        producto.cantidad = inputNumber.value;
+        setToDataBase('ProductoADetallar', producto);
+    });
+
+    const addToCart = document.querySelector('#Detalles div .addToCart');
+    addToCart.addEventListener('click', () => {
+        const carrito = getFromDataBase('carrito');
+        const productoAgregar = getFromDataBase('ProductoADetallar');
+        const inx = inCarrito(productoAgregar);
+        if (inx != -1){
+            carrito[inx].cantidad = productoAgregar.cantidad;
+        } else {
+            carrito.push(productoAgregar);
+        }
+        setToDataBase('carrito', carrito);
+    });
+}
+
+const PublicarProductos = () =>{
+    const arrayProductos = getFromDataBase('TodosLosProductos');
+    if (arrayProductos == null) return;
+    const section = document.getElementById("todosLos-productos");
+    arrayProductos.forEach( producto => {
+        const contenedor = document.createElement("a");
+        contenedor.setAttribute("href", "#");
+        contenedor.setAttribute("id", `${producto.id}`);
+        contenedor.className = "col-4";
+        contenedor.innerHTML = `<img src="../images/${producto.imagen}" alt= "Producto Destacado">
+                                <h4>${producto.descripcion}</h4>
+                                ${ratingDelProducto(producto.rating)}
+                                <p>$${producto.precio.toLocaleString('en-US')}</p>`;
+        section.appendChild(contenedor);
+
+        //Eventos para cada nodo producto que se encuentre en el index
+        contenedor.addEventListener('click', () => {
+            localStorage.setItem('ProductoADetallar', JSON.stringify(producto));
+            subirDetalles();
+        });
+    });
+}
+
+//Ejecutamos el codigo JS y modificamos el html
+subirDetalles();
+PublicarProductos();
