@@ -3,6 +3,7 @@ const Carrito = getFromDataBase('carrito');
 const mainDiv = document.querySelector(".cart-page");
 const ContenedorDeProductos = document.getElementById("CargarCarrito");
 const divPrecioTotal = document.querySelector(".total-price");
+const IVA = 1.21;
 
 // --------------------- Modulos ---------------------//
 
@@ -46,15 +47,10 @@ const CargarCarrito = () => {
     } else {
         Carrito.forEach( objeto => {
             CargarProductoAlCarrito(objeto);
-        });
+        })
     }
 
     CargarTotal();
-}
-
-const TotalCarrito = () =>{
-    if (Carrito == null || Carrito.length == 0)return 0;
-    return Carrito.reduce((acc, prod) => acc + (prod.precio * prod.cantidad), 0);
 }
 
 const CargarProductoAlCarrito = (producto) =>{
@@ -82,7 +78,7 @@ const CargarProductoAlCarrito = (producto) =>{
     tr.appendChild(td3);
     ContenedorDeProductos.appendChild(tr);
 
-    //Eventos a los botones
+    //Evento: Remover un producto del carrito 
      const removeBtn = document.querySelector(`#producto-${producto.id} .cart-info a`);
     removeBtn.addEventListener('click', () => {
         Carrito.splice(inCarrito(producto), 1);
@@ -90,6 +86,7 @@ const CargarProductoAlCarrito = (producto) =>{
         CargarCarrito();
     }); 
 
+    //Evento: Alterar la cantidad de un producto 
     const quantityInput = document.querySelector(`#producto-${producto.id} td input`);
     quantityInput.addEventListener('change', () => {
         if (quantityInput.value < 0){
@@ -100,12 +97,9 @@ const CargarProductoAlCarrito = (producto) =>{
             quantityInput.value = 999;
             alert(`El maximo de productos a comprar es 999 unidades`)
         }
-
         const precioTotalDelProducto = document.querySelector(`#producto-${producto.id}`).lastElementChild;
         const nuevoPrecio = producto.precio * quantityInput.value;
-
         precioTotalDelProducto.innerHTML = `$${(nuevoPrecio).toLocaleString('en-US')}`;
-
         Carrito[inCarrito(producto)].cantidad = quantityInput.value;
         setToDataBase('carrito', Carrito);
         CargarTotal();
@@ -115,22 +109,43 @@ const CargarProductoAlCarrito = (producto) =>{
 const CargarTotal = () => {
     divPrecioTotal.innerHTML = ``;
     const ContenedorTable = document.createElement('table');
-    const IVA = 1.21;
     const total = TotalCarrito();
+    const CantidadProductos = CantidadDeProductos();
+    const DescuentoJustBuy = Descuento(CantidadProductos);
+    const DescuentoTotal = parseInt((total * (1 - (DescuentoJustBuy / 100)))).toLocaleString('en-US');
     ContenedorTable.innerHTML = `<tr>
                                      <td>SubTotal</td>
                                      <td>$${(total).toLocaleString('en-US')}</td>
                                  </tr>
                                  <tr>
-                                     <td>IVA</td>
-                                     <td>21%</td>
+                                     <td>Descuento por llevar ${CantidadProductos} productos</td>
+                                     <td class="p-descuento">${DescuentoJustBuy}%</td>
                                  </tr>
                                  <tr>
                                      <td>Total</td>
-                                     <td>$${(total * IVA).toLocaleString('en-US')}</td>
+                                     <td class="p-descontado" >$${(total).toLocaleString('en-US')}</td>
+                                 </tr>
+                                 <tr>
+                                     <td></td>
+                                     <td class="p-descuento" >$${DescuentoTotal}</td>
+                                 </tr>
+                                 <tr>
+                                    <td><a class="btn-comprar" id="comprar-btn">Comprar</a></td>
                                  </tr>`;
     divPrecioTotal.appendChild(ContenedorTable);
+
+    //Evento: Se presiono el boton de compra
+    const btnComprar = document.getElementById("comprar-btn");
+    btnComprar.addEventListener('click', () => {
+        if (confirm(`Esta seguro que desea comprar estos productos por $${(TotalCarrito() * IVA).toLocaleString('en-US')} ?`)){
+            alert(`Muchas Gracias por su compra! Sus productos serán entregados mañana a su domicilio :)`);
+            while(Carrito.length) Carrito.pop();
+            setToDataBase('carrito', Carrito);
+            CargarCarrito();
+        }
+    });
 }
+
 
 const inCarrito = (productoVerificar) => { 
     //retorna la posicion del objeto en el array carrito, retorna -1 si no está
@@ -139,6 +154,25 @@ const inCarrito = (productoVerificar) => {
         if (carrito[inx].id == productoVerificar.id) return inx;
     }
     return -1;
+}
+
+const TotalCarrito = () => {
+    if (Carrito == null || Carrito.length == 0) return 0;
+    return Carrito.reduce((acc, prod) => acc + (prod.precio * prod.cantidad), 0);
+}
+
+const CantidadDeProductos = () => {
+    return Carrito.reduce((acc, prod) => acc + parseInt(prod.cantidad), 0);
+}
+
+const Descuento = (Cantidad) => {
+    if (Cantidad >= 20){
+        return 40;
+    } else if (Cantidad > 1){
+        return Cantidad * 2;
+    } else {
+        return Cantidad;
+    }
 }
 
 // --------------------- Ejecucion Principal ---------------------//

@@ -31,7 +31,7 @@ const subirDetalles = () => {
                          <div class="col-2">
                             <p>${producto.title}</p>
                             <h1>${producto.nombre}</h1>
-                            <h4>Ars$ ${(producto.precio * producto.cantidad).toLocaleString('en-US')}</h4>
+                            <h4>Ars$ ${(producto.precio).toLocaleString('en-US')}</h4>
                             <input type="number" value="${producto.cantidad}">
                             <a href="carrito.html" class="btn addToCart">Añadir al Carrito</a>
                             <h3>Detalles del Producto <i class="fa-solid fa-circle-info"></i> </h3>
@@ -42,6 +42,14 @@ const subirDetalles = () => {
     //Eventos para los productos detallados
     const inputNumber = document.querySelector('#Detalles div input');
     inputNumber.addEventListener('change', () => {
+        if (inputNumber.value < 0){
+            inputNumber.value = 0;
+            alert(`No puede comprar menos de 0 productos`)
+        }
+        if (inputNumber.value > 999){
+            inputNumber.value = 999;
+            alert(`El maximo de productos a comprar es 999 unidades`)
+        }
         producto.cantidad = inputNumber.value;
         setToDataBase('ProductoADetallar', producto);
     });
