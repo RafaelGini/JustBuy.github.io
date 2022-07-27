@@ -20,28 +20,28 @@ const PublicarProductos = () =>{
 }
 
 //Ordenamiento de todos los productos en el html
-const OrdenarTodosLosProductos = tipo => {
-    switch (tipo){
-        case "0":
+const OrdenarTodosLosProductos = tipoDeSort => {
+    switch (tipoDeSort){
+        case "1":
             arrayProductos.sort(function(a, b){return 0.5 - Math.random()});
             break;
-        case "1":
+        case "2":
             arrayProductos.sort(function(a, b){return b.precio - a.precio});
             break;
-        case "2":
+        case "3":
             arrayProductos.sort(function(a, b){return a.precio - b.precio});
             break;
-        case "3":
-            arrayProductos.sort(function(a, b){return b.rating - a.rating});
+        case "4":
+            arrayProductos.sort(function(a, b){return b.rating - a.rating}); 
             break;
         default:
+            arrayProductos.sort(function(a, b){return a.id - b.id});
             break;
     }
 }
 
 //Obtenemos Todos los productos del Storage y ubicamos el array en una constante de comportamiento global para este archivo JS
 const arrayProductos = getFromDataBase('TodosLosProductos');
-arrayProductos.sort(function(a, b){return 0.5 - Math.random()});
 
 //Eventos de productos.html para el ordenamiento y despliegue de los productos
 const seleccion = document.getElementById("selection");

@@ -12,7 +12,7 @@ class Producto {
     }
 
     precioToARS(TipoMoneda, monto){
-        if (TipoMoneda == ars) return monto;
+        if (TipoMoneda == ars) return monto * inflacion;
         else return monto * DolarBlueHoy;
     }
 
@@ -89,5 +89,6 @@ class Etiquetas {
         this.EtiquetaMackBook = ["Apple", "Mackbook", "Mackbooks", "Computadora", "Computadoras", "Notebook", "Notebooks", "Pc", "Portatil", "Gaming", "Pro"];
         this.EtiquetasProcesador = ["Procesador", "Procesadores", "CPU", "intel", "i", "12th gen", "gen", "amd", "Ryzen"];
         this.EtiquetasGrafica = ["Grafica", "GPU", "Gaming"];
+        this.EtiquetasSmartTV = ['Televisores', 'Smart TV', 'Plasmas', 'FHD', 'UHD', '4k', 'Pantallas', 'Monitores', 'Pixeles'];
     }
 }

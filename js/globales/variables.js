@@ -1,6 +1,7 @@
 //------------------------------- Parametros Globales -------------------------------//
-const DolarBlueventa = 309;
-const DolarBluecompra = 304;
+const inflacion = 1.20;
+const DolarBlueventa = 323;
+const DolarBluecompra = 318;
 const DolarBlueHoy = (DolarBluecompra + DolarBlueventa) / 2;
 const usd = "usd";
 const ars = "ars";

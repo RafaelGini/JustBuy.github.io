@@ -25,18 +25,19 @@ const subirDetalles = () => {
     const producto = getFromDataBase('ProductoADetallar');
     if (producto == null) return;
     const section = document.getElementById("Detalles");
+    const {imagen, title, nombre, precio, cantidad, descripcion} = producto;
     section.innerHTML = `<div class="col-2 df-row-center"> 
-                            <img src="../images/${producto.imagen}"> 
+                            <img src="../images/${imagen}"> 
                          </div>
                          <div class="col-2">
-                            <p>${producto.title}</p>
-                            <h1>${producto.nombre}</h1>
-                            <h4>Ars$ ${(producto.precio).toLocaleString('en-US')}</h4>
-                            <input type="number" value="${producto.cantidad}">
+                            <p>${title}</p>
+                            <h1>${nombre}</h1>
+                            <h4>Ars$ ${(precio).toLocaleString('en-US')}</h4>
+                            <input type="number" value="${cantidad}">
                             <a href="carrito.html" class="btn addToCart">Añadir al Carrito</a>
                             <h3>Detalles del Producto <i class="fa-solid fa-circle-info"></i> </h3>
                             <br>
-                            <p>${producto.descripcion} </p>
+                            <p>${descripcion} </p>
                          </div>`;
 
     //Eventos para los productos detallados
@@ -73,14 +74,15 @@ const PublicarProductos = () =>{
     if (arrayProductos == null) return;
     const section = document.getElementById("todosLos-productos");
     arrayProductos.forEach( producto => {
+        const {id, imagen, descripcion, rating, precio} = producto;
         const contenedor = document.createElement("a");
         contenedor.setAttribute("href", "#");
-        contenedor.setAttribute("id", `${producto.id}`);
+        contenedor.setAttribute("id", `${id}`);
         contenedor.className = "col-4";
-        contenedor.innerHTML = `<img src="../images/${producto.imagen}" alt= "Producto Destacado">
-                                <h4>${producto.descripcion}</h4>
-                                ${ratingDelProducto(producto.rating)}
-                                <p>$${producto.precio.toLocaleString('en-US')}</p>`;
+        contenedor.innerHTML = `<img src="../images/${imagen}" alt= "Producto Destacado">
+                                <h4>${descripcion}</h4>
+                                ${ratingDelProducto(rating)}
+                                <p>$${precio.toLocaleString('en-US')}</p>`;
         section.appendChild(contenedor);
 
         //Eventos para cada nodo producto que se encuentre en el index

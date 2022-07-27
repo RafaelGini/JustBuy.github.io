@@ -15,17 +15,12 @@ const ratingDelProducto = rating => {
 }
 
 const VaciarElemento = IdContainer => {
-    if (document.getElementById(IdContainer) == null) return;
-    let section = document.getElementById(IdContainer);
+    const section = document.getElementById(IdContainer);
     section.innerHTML = ``;
 }
 
 const menutoggle = () => {
-    if(MenuItems.style.maxHeight == "0px"){
-        MenuItems.style.maxHeight = "400px";
-    } else {
-        MenuItems.style.maxHeight = "0px";
-    }
+    (MenuItems.style.maxHeight == "0px") ? MenuItems.style.maxHeight = "400px" : MenuItems.style.maxHeight = "0px";
 }
 
 let MenuItems = document.getElementById("MenuItems");

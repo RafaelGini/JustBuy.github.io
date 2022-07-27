@@ -9,7 +9,11 @@ const setToDataBase = (CLAVE, VALOR) => localStorage.setItem(CLAVE, JSON.stringi
 const Etiqs = new Etiquetas();
 
 // Todos los Televisores 
-const TodosLosSmartTv = [];
+const Philips7000 = new SmartTv('Smart Tv Philips 7000 Series', ars, 98_000, 'ST_philips7000.webp', Etiqs.EtiquetasSmartTV, `50"`, '4k', 4.5);
+const Samsung7 = new SmartTv('Smart Tv Samsung Series 7', ars, 99_000, 'ST_samsung7.webp', Etiqs.EtiquetasSmartTV, `50"`, '4k', 4.5);
+const noblex55 = new SmartTv('Smart Tv Noblex DK', ars, 105_500, 'ST_noblex.webp', Etiqs.EtiquetasSmartTV, `55"`, '4k', 5);
+const SamsungNEO = new SmartTv('Smart Tv Samsung Neo QLED', ars, 1_579_000, 'ST_samsungNEO.webp', Etiqs.EtiquetasSmartTV, `75"`, '8k', 5);
+const TodosLosSmartTv = [Philips7000, Samsung7, noblex55, SamsungNEO];
 
 // Todos los Celulares 
 const Iphone13ProMax1000 = new Celular("Apple Iphone 13 Pro Max", ars, 600_000, "IphoneProMax.png", Etiqs.EtiquetasIphone, "1TB", "Grafito", 5);
@@ -20,11 +24,14 @@ const TodosLosCelulares = [Iphone13ProMax1000, Iphone13Pro256, SamsungS22Ultra25
 
 // Todos los Pc 
 const AsusZephM16 = new Pc("Asus Zephyrus M16", ars, 450_000, "asus_m16.png", Etiqs.EtiquetaAsusPc, "512 SSD", `15"`, 4.5, "16GB RAM", "RTX 3050", "i9", "OLED UHD");
+const AsusRogStrix = new Pc("Asus ROG Strix G15", ars, 700_000, "asusRogStrix.webp", Etiqs.EtiquetaAsusPc, "1TB SSD", `15.6"`, 4.5, "32GB RAM", "RTX 2070", "i7", "FHD");
 const AsusZephG14 = new Pc("Asus Zephyrus G14", ars, 480_000, "asus_g14.png", Etiqs.EtiquetaAsusPc, "512 SSD", `15"`, 4, "16GB RAM", "RTX 3080", "Ryzen 9", "UHD");
+const RazerBlade = new Pc("Razer Blade 15", usd, 5000,  "razer_blade.png", Etiqs.EtiquetaAsusPc, "1TB SSD", `15.6"`, 5, "32GB DDR5 RAM", "Nvidia GeForce RTX 3080 Ti", "12th Gen Intel Core i9 CPU", "4k UHD 144Hz");
 const MacbookPro14M1 = new Pc("MackBook Pro 14", ars, 690_000, "macbookproM116 1.png", Etiqs.EtiquetaMackBook, "512 SSD", `14"`, 5, "16GB RAM", "Integrada", "M1", "UHD");
 const MacbookPro16M1Pro = new Pc("MackBook Pro 16", ars, 770_900, "macbookproM1Pro 1.png", Etiqs.EtiquetaMackBook, "512 SSD", `16"`, 5, "16GB RAM", "Integrada", "M1 Pro", "UHD");
-const RazerBlade = new Pc("Razer Blade 15", usd, 5000,  "razer_blade.png", Etiqs.EtiquetaAsusPc, "1TB SSD", `15.6"`, 5, "32GB DDR5 RAM", "Nvidia GeForce RTX 3080 Ti", "12th Gen Intel Core i9 CPU", "4k UHD 144Hz");
-const TodasLasPc = [AsusZephM16, AsusZephG14, MacbookPro14M1, MacbookPro16M1Pro, RazerBlade];
+const MacbookAir13 = new Pc("MackBook Air 13", ars, 270_000, "macbookkair13.webp", Etiqs.EtiquetaMackBook, "256 SSD", `13"`, 5, "8GB RAM", "Integrada", "M1", "UHD");
+const MacbookPro13 = new Pc("MackBook Pro 13", ars, 478_500, "macbookkpro13.webp", Etiqs.EtiquetaMackBook, "512 SSD", `13"`, 5, "8GB RAM", "Integrada", "M1", "UHD");
+const TodasLasPc = [AsusZephM16, AsusRogStrix, AsusZephG14, RazerBlade, MacbookPro14M1, MacbookPro16M1Pro, MacbookAir13, MacbookPro13];
 
 // Todos los Consolas
 const ps5Disquera = new Consola("Sony PlayStation 5", ars, 220_000, "", [], "800GB", "Disquera", 4.5);
