@@ -74,7 +74,7 @@ if (localStorage.length == 0){
     console.log('Se cargaron todos los datos');
 }
 
-if (false){
+if (true){
     localStorage.clear();
     console.log('Se eliminaron Todos los datos');
 }

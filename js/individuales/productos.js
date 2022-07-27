@@ -2,14 +2,15 @@
 const PublicarProductos = () =>{
     const section = document.getElementById('todosLos-productos');
     arrayProductos.forEach( producto => {
+        const {id, imagen, descripcion, rating, precio, } = producto;
         const contenedor = document.createElement("a");
         contenedor.setAttribute("href", "detallesDeProducto.html");
-        contenedor.setAttribute("id", `${producto.id}`);
+        contenedor.setAttribute("id", `${id}`);
         contenedor.className = "col-4";
-        contenedor.innerHTML = `<img src="../images/${producto.imagen}" alt= "Producto Destacado">
-                                <h4>${producto.descripcion}</h4>
-                                ${ratingDelProducto(producto.rating)}
-                                <p>$${producto.precio.toLocaleString('en-US')}</p>`;
+        contenedor.innerHTML = `<img src="../images/${imagen}" alt= "Producto Destacado">
+                                <h4>${descripcion}</h4>
+                                ${ratingDelProducto(rating)}
+                                <p>$${precio.toLocaleString('en-US')}</p>`;
         section.appendChild(contenedor);
 
         //Eventos para cada nodo producto que se encuentre en el html
