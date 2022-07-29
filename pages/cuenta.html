@@ -19,46 +19,65 @@
 
     <!-- ==================== Favicon & Title ====================-->
     <link rel="shortcut icon" href="../images/Logo.png" type="image/x-icon">
-    <title>Detalles del Producto - JustBuy</title>
+    <title>Mis Compras - JustBuy</title>
 </head>
 <body>
 
     <!-- =============== Header =============== -->
-    <div class="container">
-        <div class="navbar">
-            <a href="../index.html">
-                <div class="logo">
-                    <img src="../images/Logo.png" alt="Logo" width="40px">
-                    <p>JustBuy</p>
+    <div class="header">
+        <div class="container">
+            <div class="navbar">
+                <a href="../index.html">
+                    <div class="logo">
+                        <img src="../images/Logo.png" alt="Logo" width="40px">
+                        <p>JustBuy</p>
+                    </div>
+                </a>
+                <nav>
+                    <ul id="MenuItems">
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="#">Nosotros</a></li>
+                        <li><a href="">Contacto</a></li>
+                        <li><a href="#">Cuenta</a></li>
+                    </ul>
+                </nav>
+                <a href="#"><i class="fas fa-shopping-cart"></i></a>
+                <i class="fa-solid fa-bars" onclick="menutoggle()"></i>
+            </div>
+
+            <!-- =============== Cuenta =============== -->
+            <div class="account-page">
+                <div class="row">
+                    <div class="col-2">
+                        <img src="../images/SecurityAccount1.png" alt="">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-container">
+                            <div class="form-btn">
+                                <span id="form-btn-login">Ingresar</span>
+                                <span id="form-btn-regis">Registrar</span>
+                                <hr id="Indicator">
+                            </div>
+                            <form id="LoginForm">
+                                <input type="text" placeholder="Nombre De Usuario">
+                                <input type="password" placeholder="Contraseña">
+                                <button type="submit" class="btn">Ingresar</button>
+                                <a href="">Olvidé la Contraseña</a>
+                            </form>
+                            <form id="RegForm">
+                                <input type="text" placeholder="Nombre De Usuario" required>
+                                <input type="email" placeholder="Email">
+                                <input type="password" placeholder="Contraseña" required>
+                                <button type="submit" class="btn">Registrarse</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </a>
-            <nav>
-                <ul id="MenuItems">
-                    <li><a href="../index.html">Inicio</a></li>
-                    <li><a href="productos.html">Productos</a></li>
-                    <li><a href="">Nosotros</a></li>
-                    <li><a href="">Contacto</a></li>
-                    <li><a href="">Cuenta</a></li>
-                </ul>
-            </nav>
-            <a href="carrito.html"><i class="fas fa-shopping-cart"></i></a>
-            <i class="fa-solid fa-bars" onclick="menutoggle()"></i>
+            </div>
         </div>
     </div>
-
-    <!-- ---------------- Detalles de producto ------------------ -->
-    <div class="small-container single-product">
-        <div class="row" id="Detalles">
-        </div>
-    </div>
-
-    <div class="product-container">
-        <div class="small-container">
-           <div class="row" id="todosLos-productos">
-           </div>
-       </div>
-    </div>
-
+   
     <!-- =============== Footer =============== -->
     <div class="footer">
         <div class="container">
@@ -102,18 +121,18 @@
         </div>
     </div>
 
-
     <!-- -------------- SweatAlert2 ----------------- -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
     <!-- -------------- JavaScript para todos los html ----------------- -->
     <script src="../js/globales/variables.js"></script>
     <script src="../js/globales/clases.js"></script>
     <script src="../js/globales/storage.js"></script>
     <script src="../js/globales/main.js"></script>
 
-    <!-- -------------- JavaScript para productos.html ----------------- -->
-    <script src="../js/individuales/detallesDeProducto.js"></script>
+    <!-- -------------- JavaScript para carrito.html ----------------- -->
+    <script src="../js/individuales/cuenta.js"></script>
+    
     
 </body>
 </html>

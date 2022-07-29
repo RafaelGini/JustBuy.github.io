@@ -104,9 +104,8 @@ p{
 
 .btn{
     display: inline-block;
-    background-image: linear-gradient(90deg, var(--paleta1), var(--paleta4));
+    background: linear-gradient(90deg, var(--paleta1), var(--paleta4));
     color: #000;
-    font-weight: bold;
     padding: 8px 30px;
     margin: 30px 0;
     border-radius: 30px;
@@ -588,10 +587,90 @@ th:last-child{
 }
 
 
-/* ======================  Section ======================*/
+/* ======================  Account Page ======================*/
 
+.account-page{
+    padding: 50px 0;
+}
 
+.form-container{
+    background-color: #fff;
+    width: 300px;
+    height: 400px;
+    position: relative;
+    text-align: center;
+    padding: 20px 0;
+    margin: auto;
+    box-shadow: 0 0 20px 0px  rgba(0, 0, 0, .1);
+    overflow: hidden;
+}
 
+.form-container span{
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0 10px;
+    color: #555;
+    width: 48%;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.form-btn{
+    display: inline-block;
+}
+
+.form-container form{
+    max-width: 300px;
+    padding: 0 20px;
+    position: absolute;
+    top: 130px;
+    transition: all .6s;
+}
+
+form input{
+    width: 100%;
+    height: 30px;
+    margin: 10px 0;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+}
+
+form .btn{
+    width: 100%;
+    border:none;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+form .btn:focus{
+    outline: none;
+}
+
+#LoginForm{
+    left: -300px;
+}
+
+#RegForm{
+    left: 0;
+}
+
+form a{
+    font-size: 12px;
+}
+
+form a:hover{
+    text-decoration: underline;
+}
+
+#Indicator{
+    width: 100px;
+    border: none;
+    background-color: var(--paleta1);
+    height: 3px;
+    margin-top: 8px;
+    transform: translateX(100px);
+    transition: all .6s;
+}
 
 /* ======================  Media Query Menu ======================*/
 @media only screen and (max-width: 800px){

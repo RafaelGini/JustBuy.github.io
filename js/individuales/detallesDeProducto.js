@@ -70,10 +70,9 @@ const subirDetalles = () => {
 }
 
 const PublicarProductos = () =>{
-    const arrayProductos = getFromDataBase('TodosLosProductos');
-    if (arrayProductos == null) return;
+    if (!TodosLosProductos) return;
     const section = document.getElementById("todosLos-productos");
-    arrayProductos.forEach( producto => {
+    TodosLosProductos.forEach( producto => {
         const {id, imagen, descripcion, rating, precio} = producto;
         const contenedor = document.createElement("a");
         contenedor.setAttribute("href", "#");
