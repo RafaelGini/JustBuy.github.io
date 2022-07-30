@@ -162,12 +162,41 @@ const CargarTotal = () => {
     //Evento: Se presiono el boton de compra
     const btnComprar = document.getElementById("comprar-btn");
     btnComprar.addEventListener('click', () => {
-        alert(`Muchas Gracias por su compra! Sus productos serán entregados mañana a su domicilio :)`);
+        Swal.fire({
+            icon: 'success',
+            title: 'Buena Elección!',
+            text: 'Su compra a sido realizada!',
+            footer: 'No se preocupe, usted no ha gastado dinero de verdad'
+        });
         while(Carrito.length) Carrito.pop();
         setToDataBase('carrito', Carrito);
         CargarCarrito();
     });
 }
 
+const JustAdded = () => {
+    if (getFromDataBase('justAdded')){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+    
+        Toast.fire({
+        icon: 'success',
+        title: 'Su producto ha sido añadido.'
+        });
+
+        setToDataBase('justAdded', false);
+    }
+}
+
 // --------------------- Ejecucion Principal ---------------------//
+JustAdded();
 CargarCarrito();

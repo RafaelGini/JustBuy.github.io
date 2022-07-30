@@ -65,6 +65,7 @@ const subirDetalles = () => {
         } else {
             carrito.push(productoAgregar);
         }
+        setToDataBase('justAdded', true);
         setToDataBase('carrito', carrito);
     });
 }

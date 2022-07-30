@@ -62,13 +62,12 @@ const ProductosDestacados = [IntelCorei9, NvidiaRTX3090, AmdRyzen95900, IntelCor
 const UltimosProductos = [AsusZephM16, MacbookPro14M1, MacbookPro16M1Pro, AsusZephG14, Iphone13ProMax1000, SamsungS22Plus256, SamsungS22Ultra256, Iphone13Pro256];
 const OfertaExclusiva = RazerBlade;
 const carrito = [];
-const cuentas = [];
 const ProductoADetallar = null;
 
 if (localStorage.length == 0){
+    localStorage.setItem('justAdded', JSON.stringify(false));
     localStorage.setItem('ProductoADetallar', JSON.stringify(ProductoADetallar));
     localStorage.setItem('carrito', JSON.stringify(carrito));
-    localStorage.setItem('cuentas', JSON.stringify(cuentas));
     console.log('Se cargaron todos los datos');
 }
 
