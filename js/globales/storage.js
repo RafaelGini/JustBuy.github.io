@@ -64,14 +64,11 @@ const OfertaExclusiva = RazerBlade;
 const carrito = [];
 const ProductoADetallar = null;
 
-if (localStorage.length == 0){
-    localStorage.setItem('justAdded', JSON.stringify(false));
-    localStorage.setItem('ProductoADetallar', JSON.stringify(ProductoADetallar));
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-    console.log('Se cargaron todos los datos');
-}
-
-if (false){
+if (!getFromDataBase('AlreadyLogged')){
     localStorage.clear();
-    console.log('Se eliminaron Todos los datos');
+    setToDataBase('AlreadyLogged', true);
+    setToDataBase('justAdded', false);
+    setToDataBase('carrito', carrito);
+    setToDataBase('ProductoADetallar', ProductoADetallar);
+    console.log('Se cargaron todos los datos');
 }

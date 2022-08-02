@@ -8,16 +8,23 @@ const inCarrito = (productoVerificar) => {
     return -1;
 }
 
-const AddToCart = () => {
-    const carrito = getFromDataBase('carrito');
-    const productoAgregar = getFromDataBase('ProductoADetallar');
-    const inx = inCarrito(productoAgregar);
-    if (inx != -1){
-        carrito[inx].cantidad = productoAgregar.cantidad;
-    } else {
-        carrito.push(productoAgregar);
-    }
-    setToDataBase('carrito', carrito);
+const LanzarToast = (text) => {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+
+    Toast.fire({
+    icon: 'warning',
+    title: `${text}`
+    });
 }
 
 //Funciones similares a los demas JS pero con cambios muy especificos que son requeridos por el archivo detallesDeProducto.html
@@ -45,11 +52,11 @@ const subirDetalles = () => {
     inputNumber.addEventListener('change', () => {
         if (inputNumber.value < 0){
             inputNumber.value = 0;
-            alert(`No puede comprar menos de 0 productos`)
+            LanzarToast('La minima cantidad es 0.');
         }
         if (inputNumber.value > 999){
             inputNumber.value = 999;
-            alert(`El maximo de productos a comprar es 999 unidades`)
+            LanzarToast('La maxima cantidad es 999.');
         }
         producto.cantidad = inputNumber.value;
         setToDataBase('ProductoADetallar', producto);

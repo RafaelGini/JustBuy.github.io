@@ -25,6 +25,25 @@ const Descuento = (Cantidad) => {
     return (Cantidad >= 20) ? 40 : (Cantidad > 1) ? Cantidad * 2 : Cantidad;
 }
 
+const LanzarToast = (text) => {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+
+    Toast.fire({
+    icon: 'warning',
+    title: `${text}`
+    });
+}
+
 const CargarEncabezadoTabla = () => {
     ContenedorDeProductos.innerHTML = ``;
 
@@ -65,7 +84,7 @@ const CaragrCarritoVacio = () => {
 
 const CargarCarrito = () => {
     CargarEncabezadoTabla();
-    if (Carrito == null || !Carrito.length){
+    if (!Carrito || !Carrito.length){
         CaragrCarritoVacio();
     } else {
         Carrito.forEach( objeto => { CargarProductoAlCarrito(objeto) });
@@ -114,11 +133,11 @@ const CargarProductoAlCarrito = (producto) =>{
     quantityInput.addEventListener('change', () => {
         if (quantityInput.value < 0){
             quantityInput.value = 0;
-            alert(`No puede comprar menos de 0 productos`)
+            LanzarToast('La minima cantidad es 0.');
         }
         if (quantityInput.value > 999){
             quantityInput.value = 999;
-            alert(`El maximo de productos a comprar es 999 unidades`)
+            LanzarToast('La maxima cantidad es 999.');
         }
         const precioTotalDelProducto = document.querySelector(`#producto-${id}`).lastElementChild;
         const nuevoPrecio = precio * quantityInput.value;
@@ -180,7 +199,7 @@ const JustAdded = () => {
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 5000,
+            timer: 3500,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.addEventListener('mouseenter', Swal.stopTimer)
