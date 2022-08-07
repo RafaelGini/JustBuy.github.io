@@ -1,5 +1,5 @@
 //Funciones para publicar todos productos
-const PublicarProductos = () =>{
+const PublicarProductos = (TodosLosProductos) =>{
     const section = document.getElementById('todosLos-productos');
     TodosLosProductos.forEach( producto => {
         const {id, imagen, descripcion, rating, precio, } = producto;
@@ -20,23 +20,47 @@ const PublicarProductos = () =>{
     });
 }
 
-//Ordenamiento de todos los productos en el html
-const OrdenarTodosLosProductos = tipoDeSort => {
+const Ordenar = tipoDeSort => {
     switch (tipoDeSort){
         case "1":
-            TodosLosProductos.sort(function(a, b){return 0.5 - Math.random()});
+            fetch('../../data/productos.json')
+                .then( Resp => Resp.json() )
+                .then( Data => { 
+                    PublicarProductos(Data.productos.sort(function(a, b){return 0.5 - Math.random()})) 
+                })
+                .catch(e => console.log(e));
             break;
         case "2":
-            TodosLosProductos.sort(function(a, b){return b.precio - a.precio});
+            fetch('../../data/productos.json')
+                .then( Resp => Resp.json() )
+                .then( Data => { 
+                    PublicarProductos(Data.productos.sort(function(a, b){return b.precio - a.precio})) 
+                })
+                .catch(e => console.log(e));
             break;
         case "3":
-            TodosLosProductos.sort(function(a, b){return a.precio - b.precio});
+            fetch('../../data/productos.json')
+                .then( Resp => Resp.json() )
+                .then( Data => { 
+                    PublicarProductos(Data.productos.sort(function(a, b){return a.precio - b.precio})) 
+                })
+                .catch(e => console.log(e));
             break;
         case "4":
-            TodosLosProductos.sort(function(a, b){return b.rating - a.rating}); 
+            fetch('../../data/productos.json')
+                .then( Resp => Resp.json() )
+                .then( Data => { 
+                    PublicarProductos(Data.productos.sort(function(a, b){return b.rating - a.rating})) 
+                })
+                .catch(e => console.log(e));
             break;
         default:
-            TodosLosProductos.sort(function(a, b){return a.id - b.id});
+            fetch('../../data/productos.json')
+                .then( Resp => Resp.json() )
+                .then( Data => { 
+                    PublicarProductos(Data.productos.sort(function(a, b){return a.id - b.id})) 
+                })
+                .catch(e => console.log(e));
             break;
     }
 }
@@ -45,9 +69,15 @@ const OrdenarTodosLosProductos = tipoDeSort => {
 const seleccion = document.getElementById("selection");
 seleccion.onchange = () => {
     VaciarElemento("todosLos-productos");
-    OrdenarTodosLosProductos(seleccion.value);
-    PublicarProductos();
+    Ordenar(seleccion.value);
+}
+
+const PublicarTodosLosProductos = () => {
+    fetch('../../data/productos.json')
+    .then( Resp => Resp.json() )
+    .then( Data => { PublicarProductos(Data.productos) })
+    .catch(e => console.log(`Hubo un problema con un producto ${e}`));
 }
 
 //Publicamos todos los productos en el html
-PublicarProductos();
+PublicarTodosLosProductos();

@@ -30,22 +30,23 @@ const LanzarToast = (text) => {
 //Funciones similares a los demas JS pero con cambios muy especificos que son requeridos por el archivo detallesDeProducto.html
 const subirDetalles = () => {
     const producto = getFromDataBase('ProductoADetallar');
-    if (producto == null) return;
+    if (!producto) return;
     const section = document.getElementById("Detalles");
     const {imagen, title, nombre, precio, cantidad, descripcion} = producto;
-    section.innerHTML = `<div class="col-2 df-row-center"> 
-                            <img src="../images/${imagen}"> 
-                         </div>
-                         <div class="col-2">
-                            <p>${title}</p>
-                            <h1>${nombre}</h1>
-                            <h4>Ars$ ${(precio).toLocaleString('en-US')}</h4>
-                            <input type="number" value="${cantidad}">
-                            <a href="carrito.html" class="btn addToCart">Añadir al Carrito</a>
-                            <h3>Detalles del Producto <i class="fa-solid fa-circle-info"></i> </h3>
-                            <br>
-                            <p>${descripcion} </p>
-                         </div>`;
+    section.innerHTML = 
+        `<div class="col-2 df-row-center"> 
+            <img src="../images/${imagen}"> 
+         </div>
+         <div class="col-2">
+            <p>${title}</p>
+            <h1>${nombre}</h1>
+            <h4>Ars$ ${(precio).toLocaleString('en-US')}</h4>
+            <input type="number" value="${cantidad}">
+            <a href="carrito.html" class="btn addToCart">Añadir al Carrito</a>
+            <h3>Detalles del Producto <i class="fa-solid fa-circle-info"></i> </h3>
+            <br>
+            <p>${descripcion} </p>
+         </div>`;
 
     //Eventos para los productos detallados
     const inputNumber = document.querySelector('#Detalles div input');
@@ -77,7 +78,7 @@ const subirDetalles = () => {
     });
 }
 
-const PublicarProductos = () =>{
+const PublicarProductos = (TodosLosProductos) =>{
     if (!TodosLosProductos) return;
     const section = document.getElementById("todosLos-productos");
     TodosLosProductos.forEach( producto => {
@@ -100,6 +101,14 @@ const PublicarProductos = () =>{
     });
 }
 
-//Ejecutamos el codigo JS y modificamos el html
+const PublicarTodosLosProductos = () => {
+    fetch('../../data/productos.json')
+    .then( Resp => Resp.json() )
+    .then( Data => { PublicarProductos(Data.productos) })
+    .catch(e => console.log(`Hubo un problema con un producto ${e}`));
+}
+
+//Publicamos todos los productos en el html
+PublicarTodosLosProductos();
 subirDetalles();
-PublicarProductos();
+
