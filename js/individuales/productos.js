@@ -69,8 +69,8 @@ seleccion.onchange = () => {
 
 const PublicarTodosLosProductos = () => {
     fetch('../../data/productos.json')
-    .then( Resp => Resp.json() )
-    .then( Data => { PublicarProductos(Data.productos) })
+        .then( Resp => Resp.json() )
+        .then( Data => { PublicarProductos(Data.productos) })
 }
 
 //Publicamos todos los productos en el html

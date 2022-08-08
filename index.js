@@ -49,7 +49,7 @@ const PublicarOferta = (producto) => {
 
 const SeleciconarProductosDestacados = (arrayTodosLosProductos, arrayIds) => {
     let i = 0;
-    let max = arrayTodosLosProductos.length;
+    const max = arrayTodosLosProductos.length;
     const ProductosDestacados = [[], [], []];
     while (i < max && (arrayIds[0] || arrayIds[1] || arrayIds[2]) ){
         const producto = arrayTodosLosProductos[i];
