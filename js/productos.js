@@ -19,59 +19,49 @@ const PublicarProductos = (TodosLosProductos) =>{
         });
     });
 }
-
-const Ordenar = tipoDeSort => {
+const publicarO = async (tipoDeSort, data) => {
     switch (tipoDeSort){
         case "1":
-            fetch('../../data/productos.json')
-                .then( Resp => Resp.json() )
-                .then( Data => { 
-                    PublicarProductos(Data.productos.sort(function(a, b){return 0.5 - Math.random()})) 
-                })
+            PublicarProductos(data.sort(function(a, b){return 0.5 - Math.random()}));  
             break;
         case "2":
-            fetch('../../data/productos.json')
-                .then( Resp => Resp.json() )
-                .then( Data => { 
-                    PublicarProductos(Data.productos.sort(function(a, b){return b.precio - a.precio})) 
-                })
+            PublicarProductos(data.sort(function(a, b){return b.precio - a.precio}));   
             break;
         case "3":
-            fetch('../../data/productos.json')
-                .then( Resp => Resp.json() )
-                .then( Data => { 
-                    PublicarProductos(Data.productos.sort(function(a, b){return a.precio - b.precio})) 
-                })
+            PublicarProductos(data.sort(function(a, b){return a.precio - b.precio})); 
             break;
         case "4":
-            fetch('../../data/productos.json')
-                .then( Resp => Resp.json() )
-                .then( Data => { 
-                    PublicarProductos(Data.productos.sort(function(a, b){return b.rating - a.rating})) 
-                })
+            PublicarProductos(data.sort(function(a, b){return b.rating - a.rating})); 
             break;
         default:
-            fetch('../../data/productos.json')
-                .then( Resp => Resp.json() )
-                .then( Data => { 
-                    PublicarProductos(Data.productos.sort(function(a, b){return a.id - b.id})) 
-                })
+            PublicarProductos(data.sort(function(a, b){return a.id - b.id})); 
             break;
     }
 }
 
+const Ordenar = async tipoDeSort => {
+    const resp = await fetch('/js/data/productos.json');
+    const data = await resp.json();
+    await publicarO(tipoDeSort, data.productos);
+}
+
 //Eventos de productos.html para el ordenamiento y despliegue de los productos
 const seleccion = document.getElementById("selection");
-seleccion.onchange = () => {
+seleccion.onchange = async () => {
     VaciarElemento("todosLos-productos");
     Ordenar(seleccion.value);
 }
 
-const PublicarTodosLosProductos = () => {
-    fetch('../../data/productos.json')
-        .then( Resp => Resp.json() )
-        .then( Data => { PublicarProductos(Data.productos) })
+const PublicarTodosLosProductos = async () => {
+    try{
+        const resp = await fetch('/js/data/productos.json');
+        const data = await resp.json();
+        PublicarProductos(data.productos);
+    } catch (e){
+        console.log(`Algun error con un producto: ${e}`);
+    }
 }
 
 //Publicamos todos los productos en el html
 PublicarTodosLosProductos();
+

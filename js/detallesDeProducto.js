@@ -101,11 +101,14 @@ const PublicarProductos = (TodosLosProductos) =>{
     });
 }
 
-const PublicarTodosLosProductos = () => {
-    fetch('../../data/productos.json')
-        .then( Resp => Resp.json() )
-        .then( Data => { PublicarProductos(Data.productos) })
-        .catch(e => console.log(`Hubo un problema con un producto ${e}`));
+const PublicarTodosLosProductos = async () => {
+    try{
+        const resp = await fetch('/js/data/productos.json');
+        const data = await resp.json();
+        PublicarProductos(data.productos);
+    } catch (e){
+        console.log(`Algun error con un producto: ${e}`);
+    }
 }
 
 //Publicamos todos los productos en el html
