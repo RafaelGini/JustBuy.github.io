@@ -73,28 +73,11 @@ const SeleciconarProductosDestacados = (arrayTodosLosProductos, arrayIds) => {
     return ProductosDestacados;
 }
 
-//Ejecucion. Se cargan Los productos destacados en el index.
-
 //Los Id`s de los productos que queremos publicar para cada contenedor
 const Destacados = [118, 119, 120, 121];
 const Ultimos = [100, 104, 105, 101, 112, 114, 115, 113];
 const Oferta = [103];
 const ids = [Destacados, Ultimos, Oferta];
-
-/* fetch('js/data/productos.json')
-    .then( Resp => Resp.json())
-    .then( Data => {
-        const ids = [Destacados, Ultimos, Oferta];
-        const ProductosDestacados = SeleciconarProductosDestacados(Data.productos, ids);
-        PublicarProductos('productos-destacados', ProductosDestacados[0]);
-        PublicarProductos('ultimos-productos', ProductosDestacados[1]);
-        PublicarOferta(ProductosDestacados[2][0]);
-    })
-    .catch(e => console.log(`Hubo un problema con un producto ${e}`)); */
-
-/* async function dataFetched(){
-    return await fetch('js/data/productos.json').json;
-} */
 
 const CargarData = async () => {
     try{
@@ -110,4 +93,5 @@ const CargarData = async () => {
 
 }
 
+//Ejecucion. Se cargan Los productos destacados en el index.
 CargarData();

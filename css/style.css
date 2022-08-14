@@ -589,7 +589,7 @@ th:last-child{
 
 /* ======================  Account Page ======================*/
 
-.account-page{
+.account-page .row .col-2 img{
     padding: 50px 0;
 }
 
@@ -718,6 +718,10 @@ form a:hover{
 
     .brands .small-container .row .col-5{
         margin-top: 50px;
+    }
+
+    .account-page .row .col-2 img{
+        padding-top: 0;
     }
 
 }

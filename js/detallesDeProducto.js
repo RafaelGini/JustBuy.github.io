@@ -103,7 +103,7 @@ const PublicarProductos = (TodosLosProductos) =>{
 
 const PublicarTodosLosProductos = async () => {
     try{
-        const resp = await fetch('/js/data/productos.json');
+        const resp = await fetch('../js/data/productos.json');
         const data = await resp.json();
         PublicarProductos(data.productos);
     } catch (e){
@@ -114,4 +114,3 @@ const PublicarTodosLosProductos = async () => {
 //Publicamos todos los productos en el html
 PublicarTodosLosProductos();
 subirDetalles();
-

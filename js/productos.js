@@ -19,7 +19,8 @@ const PublicarProductos = (TodosLosProductos) =>{
         });
     });
 }
-const publicarO = async (tipoDeSort, data) => {
+
+const publicarOrdenado = (tipoDeSort, data) => {
     switch (tipoDeSort){
         case "1":
             PublicarProductos(data.sort(function(a, b){return 0.5 - Math.random()}));  
@@ -39,29 +40,26 @@ const publicarO = async (tipoDeSort, data) => {
     }
 }
 
-const Ordenar = async tipoDeSort => {
-    const resp = await fetch('/js/data/productos.json');
-    const data = await resp.json();
-    await publicarO(tipoDeSort, data.productos);
+const agregarEventos = array => {
+    const seleccion = document.getElementById("selection");
+    seleccion.onchange = () => {
+        VaciarElemento("todosLos-productos");
+        publicarOrdenado(seleccion.value, array);
+    }
 }
 
-//Eventos de productos.html para el ordenamiento y despliegue de los productos
-const seleccion = document.getElementById("selection");
-seleccion.onchange = async () => {
-    VaciarElemento("todosLos-productos");
-    Ordenar(seleccion.value);
-}
-
-const PublicarTodosLosProductos = async () => {
-    try{
-        const resp = await fetch('/js/data/productos.json');
+//Llamamos una vez a fetch
+const fetchData = async () => {
+    try {
+        const resp = await fetch('../js/data/productos.json');
         const data = await resp.json();
-        PublicarProductos(data.productos);
+        const {productos} = data;
+        PublicarProductos(productos);
+        agregarEventos(productos);
     } catch (e){
         console.log(`Algun error con un producto: ${e}`);
     }
 }
 
-//Publicamos todos los productos en el html
-PublicarTodosLosProductos();
-
+//Cargamos la data
+fetchData();
