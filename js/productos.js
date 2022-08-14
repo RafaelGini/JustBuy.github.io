@@ -1,22 +1,27 @@
 //Funciones para publicar todos productos
-const PublicarProductos = (TodosLosProductos) =>{
+const GenerarContenedorDeProducto = producto => {
+    const {id, imagen, descripcion, rating, precio, } = producto;
+    const contenedor = document.createElement("a");
+    contenedor.setAttribute("href", "detallesDeProducto.html");
+    contenedor.setAttribute("id", `${id}`);
+    contenedor.className = "col-4";
+    contenedor.innerHTML = `
+        <img src="../images/${imagen}" alt= "Producto Destacado">
+        <h4>${descripcion}</h4>
+        ${ratingDelProducto(rating)}
+        <p>$${precio.toLocaleString('en-US')}</p>
+    `;
+    //Si se hace click sobre un producto:
+    contenedor.addEventListener('click', () => {
+        localStorage.setItem('ProductoADetallar', JSON.stringify(producto));
+    });
+    return contenedor;
+}
+
+const PublicarProductos = (TodosLosProductos) => {
     const section = document.getElementById('todosLos-productos');
     TodosLosProductos.forEach( producto => {
-        const {id, imagen, descripcion, rating, precio, } = producto;
-        const contenedor = document.createElement("a");
-        contenedor.setAttribute("href", "detallesDeProducto.html");
-        contenedor.setAttribute("id", `${id}`);
-        contenedor.className = "col-4";
-        contenedor.innerHTML = `<img src="../images/${imagen}" alt= "Producto Destacado">
-                                <h4>${descripcion}</h4>
-                                ${ratingDelProducto(rating)}
-                                <p>$${precio.toLocaleString('en-US')}</p>`;
-        section.appendChild(contenedor);
-
-        //Eventos para cada nodo producto que se encuentre en el html
-        contenedor.addEventListener('click', () => {
-            localStorage.setItem('ProductoADetallar', JSON.stringify(producto));
-        });
+        section.appendChild(GenerarContenedorDeProducto(producto));
     });
 }
 
@@ -56,7 +61,7 @@ const fetchData = async () => {
         const {productos} = data;
         PublicarProductos(productos);
         agregarEventos(productos);
-    } catch (e){
+    } catch (e) {
         console.log(`Algun error con un producto: ${e}`);
     }
 }

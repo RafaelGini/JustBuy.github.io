@@ -18,7 +18,6 @@ span2.addEventListener('click', () => {
 
 const RegFormChildren = RegForm.children;
 const LoginFormChildren = LoginForm.children;
-
 const RegBtn = RegFormChildren[3];
 const LoginBtn = LoginFormChildren[2];
 const ForgetPass = LoginFormChildren[3];
@@ -35,7 +34,6 @@ const LanzarToast = () => {
           toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     });
-
     Toast.fire({
     icon: 'error',
     title: 'De momento no contamos con serivdores.'

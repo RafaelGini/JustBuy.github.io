@@ -1,29 +1,34 @@
-//Funciones para publicar productos en distintas secciones del index, se extraen los productos del Storage
+//Funciones para publicar productos en distintas secciones del index, se extraen los productos de la BD
+const GenerarContenedorDeProducto = producto => {
+    const {imagen, descripcion, rating, precio} = producto;
+    const contenedor = document.createElement("a");
+    contenedor.setAttribute("href", "pages/detallesDeProducto.html");
+    contenedor.className = "col-4";
+    contenedor.innerHTML = `
+        <img src="images/${imagen}" alt= "Producto Destacado">
+        <h4>${descripcion}</h4>
+        ${ratingDelProducto(rating)}
+        <p>$${precio.toLocaleString('en-US')}</p>
+    `;
+
+    //Si se hace click sobre un producto:
+    contenedor.addEventListener('click', () => { 
+        localStorage.setItem('ProductoADetallar', JSON.stringify(producto));
+    });
+
+    return contenedor;
+}
+
 const PublicarProductos = (contenedor, arrayProductos) =>{
     const section = document.getElementById(contenedor);
-    if (!arrayProductos) return;
-    arrayProductos.forEach( producto => {
-        const {imagen, descripcion, rating, precio} = producto;
-        const contenedor = document.createElement("a");
-        contenedor.setAttribute("href", "pages/detallesDeProducto.html");
-         
-        contenedor.className = "col-4";
-        contenedor.innerHTML = `<img src="images/${imagen}" alt= "Producto Destacado">
-                                <h4>${descripcion}</h4>
-                                ${ratingDelProducto(rating)}
-                                <p>$${precio.toLocaleString('en-US')}</p>`;
-        section.appendChild(contenedor);
-
-        //Eventos para cada nodo producto que se encuentre en el index
-        contenedor.addEventListener('click', () => { 
-            localStorage.setItem('ProductoADetallar', JSON.stringify(producto));
-        });
+    arrayProductos.forEach( producto => { 
+        section.appendChild(GenerarContenedorDeProducto(producto)) 
     });
 }
 
 const PublicarOferta = (producto) => {
+    //Esta funcion es muy concreta
     const section = document.getElementById("oferta-exclusiva");
-    if (!producto) return;
     const {imagen, descripcion, nombre} = producto;
     const contenedor1 = document.createElement("div");
     contenedor1.className = "col-2";
@@ -31,23 +36,26 @@ const PublicarOferta = (producto) => {
     
     const contenedor2 = document.createElement("div");
     contenedor2.className = "col-2";
-    contenedor2.innerHTML = `<p>Producto destacado y exclusivo de JustBuy</p>
-                             <h1>${nombre}</h1>
-                             <small>${descripcion}</small>
-                             <br>
-                             <a href="pages/detallesDeProducto.html" class="btn" id="NodoBotonOfertaExclusiva" >Comprar Ahora</a>`;
+    contenedor2.innerHTML = `
+        <p>Producto destacado y exclusivo de JustBuy</p>
+        <h1>${nombre}</h1>
+        <small>${descripcion}</small>
+        <br>
+        <a href="pages/detallesDeProducto.html" class="btn" id="OfertaExclusiva-btn">Comprar Ahora</a>
+    `;
     section.appendChild(contenedor1);
     section.appendChild(contenedor2);
 
     //Evento para boton Comprar Ahora
-    const NodoBotonOfertaExclusiva = document.getElementById('NodoBotonOfertaExclusiva');
+    const NodoBotonOfertaExclusiva = document.getElementById('OfertaExclusiva-btn');
     NodoBotonOfertaExclusiva.addEventListener('click', () => {
         localStorage.setItem('ProductoADetallar', JSON.stringify(producto));
     });
-
 }
 
 const SeleciconarProductosDestacados = (arrayTodosLosProductos, arrayIds) => {
+    //En el index existen 3 secciones de contenedores de productos. El arrayIds contiene 3 arrays mas con...
+    //... los ids respectivos para cada seccion, la funcion sirve para recorrer solo una vez la base de datos
     let i = 0;
     const max = arrayTodosLosProductos.length;
     const ProductosDestacados = [[], [], []];
@@ -87,8 +95,8 @@ const CargarData = async () => {
         PublicarProductos('productos-destacados', ProductosDestacados[0]);
         PublicarProductos('ultimos-productos', ProductosDestacados[1]);
         PublicarOferta(ProductosDestacados[2][0]);
-    } catch (e){
-        console.log(`Algun error con un producto: ${e}`);
+    } catch (e) { 
+        console.log(`Algun error con un producto: ${e}`); 
     }
 
 }

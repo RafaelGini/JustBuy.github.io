@@ -20,7 +20,6 @@ const LanzarToast = (text) => {
           toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     });
-
     Toast.fire({
     icon: 'warning',
     title: `${text}`
@@ -33,31 +32,30 @@ const subirDetalles = () => {
     if (!producto) return;
     const section = document.getElementById("Detalles");
     const {imagen, title, nombre, precio, cantidad, descripcion} = producto;
-    section.innerHTML = 
-        `<div class="col-2 df-row-center"> 
+    section.innerHTML = `
+        <div class="col-2 df-row-center"> 
             <img src="../images/${imagen}"> 
-         </div>
-         <div class="col-2">
+        </div>
+        <div class="col-2">
             <p>${title}</p>
             <h1>${nombre}</h1>
             <h4>Ars$ ${(precio).toLocaleString('en-US')}</h4>
             <input type="number" value="${cantidad}">
             <a href="carrito.html" class="btn addToCart">Añadir al Carrito</a>
-            <h3>Detalles del Producto <i class="fa-solid fa-circle-info"></i> </h3>
-            <br>
-            <p>${descripcion} </p>
-         </div>`;
-
+            <h3>Detalles del Producto <i class="fa-solid fa-circle-info"></i></h3>
+            <br><p>${descripcion}</p>
+        </div>
+    `;
     //Eventos para los productos detallados
     const inputNumber = document.querySelector('#Detalles div input');
     inputNumber.addEventListener('change', () => {
         if (inputNumber.value < 0){
             inputNumber.value = 0;
-            LanzarToast('La minima cantidad es 0.');
+            LanzarToast('La minima cantidad es 0!');
         }
         if (inputNumber.value > 999){
             inputNumber.value = 999;
-            LanzarToast('La maxima cantidad es 999.');
+            LanzarToast('La maxima cantidad es 999!');
         }
         producto.cantidad = inputNumber.value;
         setToDataBase('ProductoADetallar', producto);
@@ -79,7 +77,6 @@ const subirDetalles = () => {
 }
 
 const PublicarProductos = (TodosLosProductos) =>{
-    if (!TodosLosProductos) return;
     const section = document.getElementById("todosLos-productos");
     TodosLosProductos.forEach( producto => {
         const {id, imagen, descripcion, rating, precio} = producto;
@@ -87,12 +84,13 @@ const PublicarProductos = (TodosLosProductos) =>{
         contenedor.setAttribute("href", "#");
         contenedor.setAttribute("id", `${id}`);
         contenedor.className = "col-4";
-        contenedor.innerHTML = `<img src="../images/${imagen}" alt= "Producto Destacado">
-                                <h4>${descripcion}</h4>
-                                ${ratingDelProducto(rating)}
-                                <p>$${precio.toLocaleString('en-US')}</p>`;
+        contenedor.innerHTML = `
+            <img src="../images/${imagen}" alt= "Producto Destacado">
+            <h4>${descripcion}</h4>
+            ${ratingDelProducto(rating)}
+            <p>$${precio.toLocaleString('en-US')}</p>
+        `;
         section.appendChild(contenedor);
-
         //Eventos para cada nodo producto que se encuentre en el index
         contenedor.addEventListener('click', () => {
             localStorage.setItem('ProductoADetallar', JSON.stringify(producto));
@@ -106,7 +104,7 @@ const PublicarTodosLosProductos = async () => {
         const resp = await fetch('../js/data/productos.json');
         const data = await resp.json();
         PublicarProductos(data.productos);
-    } catch (e){
+    } catch (e) {
         console.log(`Algun error con un producto: ${e}`);
     }
 }

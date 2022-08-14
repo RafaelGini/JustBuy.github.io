@@ -37,7 +37,6 @@ const LanzarToast = (text) => {
           toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     });
-
     Toast.fire({
     icon: 'warning',
     title: `${text}`
@@ -46,16 +45,13 @@ const LanzarToast = (text) => {
 
 const CargarEncabezadoTabla = () => {
     ContenedorDeProductos.innerHTML = ``;
-
     const tr = document.createElement('tr');
     const th1 = document.createElement('th');
     const th2 = document.createElement('th');
     const th3 = document.createElement('th');
-
     th1.innerHTML = `Producto`;
     th2.innerHTML = `Cantidad`;
     th3.innerHTML = `SubTotal`;
-    
     tr.appendChild(th1);
     tr.appendChild(th2);
     tr.appendChild(th3);
@@ -67,15 +63,12 @@ const CaragrCarritoVacio = () => {
     const td1 = document.createElement('td');
     const td2 = document.createElement('td');
     const td3 = document.createElement('td');
-
     td1.setAttribute("class", "td-empty");
     td2.setAttribute("class", "td-empty");
     td3.setAttribute("class", "td-empty");
-
     td1.innerHTML = `<h2>No Hay Productos</h2>`;
     td2.innerHTML = ``;
     td3.innerHTML = ``;
-
     tr2.appendChild(td1);
     tr2.appendChild(td2);
     tr2.appendChild(td3);
@@ -100,26 +93,23 @@ const CargarProductoAlCarrito = (producto) =>{
     const td3 = document.createElement('td');
     tr.setAttribute("id", `producto-${producto.id}`);
     td3.setAttribute("class", "maxWitdh-200px");
-    
     td1.innerHTML = `
-    <div class="cart-info">
-        <img src="../images/${imagen}" alt="${nombre}">
-        <div>
-            <p>${nombre}</p>
-            <small>Precio: $${precio.toLocaleString('en-US')} 1/ud.</small>
-            <br>
-            <a class="cursor-pointer">Remove</a>
+        <div class="cart-info">
+            <img src="../images/${imagen}" alt="${nombre}">
+            <div>
+                <p>${nombre}</p>
+                <small>Precio: $${precio.toLocaleString('en-US')} 1/ud.</small>
+                <br>
+                <a class="cursor-pointer">Remove</a>
+            </div>
         </div>
-    </div>
     `;
     td2.innerHTML = `<input type="number" value="${cantidad}">`;
     td3.innerHTML = `$${(precio * cantidad).toLocaleString('en-US')}`;
-    
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
     ContenedorDeProductos.appendChild(tr);
-
     //Evento: Remover un producto del carrito 
     const removeBtn = document.querySelector(`#producto-${id} .cart-info a`);
     removeBtn.addEventListener('click', () => {
@@ -127,7 +117,6 @@ const CargarProductoAlCarrito = (producto) =>{
         setToDataBase('carrito', Carrito);
         CargarCarrito();
     }); 
-
     //Evento: Alterar la cantidad de un producto 
     const quantityInput = document.querySelector(`#producto-${id} td input`);
     quantityInput.addEventListener('change', () => {
@@ -156,28 +145,27 @@ const CargarTotal = () => {
     const DescuentoTotal = parseInt((total * (1 - (DescuentoJustBuy / 100)))).toLocaleString('en-US');
     const ContenedorTable = document.createElement('table');
     ContenedorTable.innerHTML = `
-    <tr>
-        <td>SubTotal</td>
-        <td>$${(total).toLocaleString('en-US')}</td>
-    </tr>
-    <tr>
-        <td>Descuento por llevar ${CantidadProductos} productos</td>
-        <td class="p-descuento">${DescuentoJustBuy}%</td>
-    </tr>
-    <tr>
-        <td>Total</td>
-        <td class="p-descontado" >$${(total).toLocaleString('en-US')}</td>
-    </tr>
-    <tr>
-        <td></td>
-        <td class="p-descuento" >$${DescuentoTotal}</td>
-    </tr>
-    <tr>
-        <td><a class="btn-comprar" id="comprar-btn">Comprar</a></td>
-    </tr>
+        <tr>
+            <td>SubTotal</td>
+            <td>$${(total).toLocaleString('en-US')}</td>
+        </tr>
+        <tr>
+            <td>Descuento por llevar ${CantidadProductos} productos</td>
+            <td class="p-descuento">${DescuentoJustBuy}%</td>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td class="p-descontado" >$${(total).toLocaleString('en-US')}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="p-descuento" >$${DescuentoTotal}</td>
+        </tr>
+        <tr>
+            <td><a class="btn-comprar" id="comprar-btn">Comprar</a></td>
+        </tr>
     `;
     divPrecioTotal.appendChild(ContenedorTable);
-
     //Evento: Se presiono el boton de compra
     const btnComprar = document.getElementById("comprar-btn");
     btnComprar.addEventListener('click', () => {
@@ -206,12 +194,10 @@ const JustAdded = () => {
               toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
         });
-    
         Toast.fire({
         icon: 'success',
         title: 'Su producto ha sido añadido.'
         });
-
         setToDataBase('justAdded', false);
     }
 }
